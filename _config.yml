@@ -1,5 +1,12 @@
 title: Hazel Yu
-#logo: /assets/img/headshot_circle.png
-#description: text below image
-show_downloads: true
+logo: /images/img/headshot.png
+description: > # your text below (remove <br> elements if you don't need line breaks)
+  
+  <p align="center">
+  <a href="mailto:haazel.y@gmail.com">Email</a> |
+  <a href="https://www.linkedin.com/in/hazel-y-51a49721a/">LinkedIn</a> |
+  <a href="https://github.com/hazelyu21">GitHub</a> |
+    <a href="pdf/resume2.pdf">Resume</a>
+  </p>
+   
 theme: jekyll-theme-minimal
