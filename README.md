@@ -10,7 +10,7 @@ To do this, we looked at the mutual conditional entropy of the variables, with H
 
 After choosing the variables most associated with heart disease, we constructed a classification decision tree that minimizes the amount of conditional entropy, and thus maximizes the imformation gain from these variables on heart disease.
 
-<img src="projects/heart_disease/decision_tree.png?raw=true"/>
+<img src="images/decision_tree.png?raw=true"/>
 
 **Improvements:** To improve our model, we could increase the accuracy with boosting methods, such as Random Forest or LASSO.
 
