@@ -20,4 +20,6 @@ After choosing the variables most associated with heart disease, we constructed 
 
 ***Team:*** Shraddha Jhingan, Tsubasa Lin, Curtis Pan
 
+[![Open Code](https://img.shields.io/badge/Jupyter-Open_Files-red?logo=Jupyter)](https://github.com/hazelyu21/hazelyu.github.io/tree/main/projects/heart_disease)
+[![Open Report](https://img.shields.io/badge/PDF-View_Report-red?logo=MicrosoftWord)](docs/heart_disease_and_health_indicators.pdf)
 ---
