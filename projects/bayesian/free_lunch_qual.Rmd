@@ -1,0 +1,383 @@
+---
+title: "STATS205P Project"
+author: "Hazel Yu"
+date: "2024-05-23"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(rstan)
+test_scores = read.csv("~/Downloads/test_scores.csv")
+hist(test_scores$pretest)
+hist(test_scores$posttest)
+summary(test_scores$pretest)
+summary(test_scores$posttest)
+```
+
+```{r}
+table(test_scores$school_setting)
+urban = test_scores[test_scores$school_setting=="Urban",]
+suburban = test_scores[test_scores$school_setting=="Suburban",]
+rural = test_scores[test_scores$school_setting=="Rural",]
+hist(urban$pretest)
+hist(suburban$pretest)
+hist(rural$pretest)
+hist(urban$posttest)
+hist(suburban$posttest)
+hist(rural$posttest)
+```
+
+```{r}
+print("Urban")
+summary(urban$pretest)
+summary(urban$posttest)
+print("Suburban")
+summary(suburban$pretest)
+summary(suburban$posttest)
+print("Rural")
+summary(rural$pretest)
+summary(rural$posttest)
+```
+
+
+```{r}
+table(test_scores$school_type)
+public = test_scores[test_scores$school_type=="Public",]
+non_public = test_scores[test_scores$school_type=="Non-public",]
+hist(public$pretest)
+hist(non_public$pretest)
+hist(public$posttest)
+hist(non_public$posttest)
+```
+
+```{r}
+print("Public")
+summary(public$pretest)
+summary(public$posttest)
+
+print("Non_Public")
+summary(non_public$pretest)
+summary(non_public$posttest)
+```
+
+```{r}
+plot(test_scores$pretest, test_scores$posttest)
+```
+
+```{r}
+female = test_scores[test_scores$gender == "Female",]
+male = test_scores[test_scores$gender == "Male",]
+hist(female$pretest)
+hist(male$pretest)
+hist(female$posttest)
+hist(male$posttest)
+```
+
+```{r}
+print("Female")
+summary(female$pretest)
+summary(female$posttest)
+
+print("Male")
+summary(male$pretest)
+summary(male$posttest)
+```
+
+```{r}
+table(test_scores$classroom)
+```
+```{r}
+table(test_scores$n_student)
+```
+
+
+```{r}
+library(ggplot2)
+library(ggridges)
+ggplot(test_scores, aes(x=pretest, y = n_student, group=n_student, fill=n_student)) + geom_density_ridges() + theme_light()
+```
+
+```{r}
+ggplot(test_scores, aes(x=pretest, fill = school_setting)) + geom_density(alpha=0.25) + ggtitle("Distribution of High School Pretest Scores by School Setting") + theme_light()
+ggplot(test_scores, aes(x=posttest, fill = school_setting)) + geom_density(alpha=0.25) + ggtitle("Distribution of High School Posttest Scores by School Setting") + theme_light()
+```
+```{r}
+ggplot(test_scores, aes(x=pretest, fill = school_type)) + geom_density(alpha=0.25) + ggtitle("Distribution of High School Pretest Scores by School Type") + theme_light()
+ggplot(test_scores, aes(x=posttest, fill = school_type)) + geom_density(alpha=0.25) + ggtitle("Distribution of High School Posttest Scores by School Type") + theme_light()
+```
+```{r}
+ggplot(test_scores, aes(x=pretest, fill = gender)) + geom_density(alpha=0.25) + ggtitle("Distribution of High School Pretest Scores by Gender") + theme_light()
+ggplot(test_scores, aes(x=posttest, fill = gender)) + geom_density(alpha=0.25) + ggtitle("Distribution of High School Posttest Scores by Gender") + theme_light()
+```
+
+```{r}
+ggplot(non_public, aes(x=pretest, fill = teaching_method)) + geom_density(alpha=0.25) + ggtitle("Distribution of Non-Public High School Pretest Scores by Teaching Method") + theme_light()
+ggplot(non_public, aes(x=posttest, fill = teaching_method)) + geom_density(alpha=0.25) + ggtitle("Distribution of Non-Public High School Posttest Scores by Teaching Method") + theme_light()
+```
+
+```{r}
+schools = test_scores[,1:3]
+```
+
+
+```{r}
+library(dplyr)
+test_scores$school_setting_factor <- as.numeric(as.factor(test_scores$school_setting))
+test_scores$school_type_factor <- as.numeric(as.factor(test_scores$school_type))
+test_scores$school_factor <- as.numeric(as.factor(test_scores$school))
+test_scores$classroom_factor <- as.numeric(as.factor(test_scores$classroom))
+
+classroom_school_mapping <- test_scores %>%
+  select(classroom_factor, school_factor) %>%
+  distinct() %>%
+  arrange(classroom_factor)
+
+# Extract the school for each classroom
+school_classroom <- classroom_school_mapping$school_factor
+
+data_stan <- list(
+  N = nrow(test_scores),
+  J = length(unique(test_scores$school)),
+  K = length(unique(test_scores$classroom)),
+  y = test_scores$posttest,
+  school = test_scores$school_factor,
+  classroom = test_scores$classroom_factor,
+  school_classroom = school_classroom
+)
+
+test_fit <- stan(file = 'project.stan', data = data_stan)
+```
+
+
+```{r}
+summary(test_fit)
+```
+
+
+```{r}
+traceplot(test_fit, pars = "mu_school", inc_warmup = F)
+```
+
+```{r}
+traceplot(test_fit, pars = "sigma2_school", inc_warmup = F)
+```
+
+```{r}
+traceplot(test_fit, pars = c("mu_classroom[1]","mu_classroom[2]","mu_classroom[3]","mu_classroom[4]","mu_classroom[5]","mu_classroom[6]","mu_classroom[7]","mu_classroom[8]","mu_classroom[9]","mu_classroom[10]","mu_classroom[11]","mu_classroom[12]","mu_classroom[13]","mu_classroom[14]","mu_classroom[15]","mu_classroom[16]","mu_classroom[17]","mu_classroom[18]","mu_classroom[19]","mu_classroom[20]","mu_classroom[21]","mu_classroom[22]","mu_classroom[23]"), inc_warmup = F)
+```
+
+```{r}
+traceplot(test_fit, pars = c("mu_classroom[24]","mu_classroom[25]","mu_classroom[26]","mu_classroom[27]","mu_classroom[28]","mu_classroom[29]","mu_classroom[30]","mu_classroom[31]","mu_classroom[32]","mu_classroom[33]","mu_classroom[34]","mu_classroom[35]","mu_classroom[36]","mu_classroom[37]","mu_classroom[38]","mu_classroom[39]","mu_classroom[40]","mu_classroom[41]","mu_classroom[42]","mu_classroom[43]","mu_classroom[44]","mu_classroom[45]","mu_classroom[46]"), inc_warmup = F)
+```
+
+```{r}
+traceplot(test_fit, pars = c("mu_classroom[47]","mu_classroom[48]","mu_classroom[49]","mu_classroom[50]","mu_classroom[51]","mu_classroom[52]","mu_classroom[53]","mu_classroom[54]","mu_classroom[55]","mu_classroom[56]","mu_classroom[57]","mu_classroom[58]","mu_classroom[59]","mu_classroom[60]","mu_classroom[61]","mu_classroom[62]","mu_classroom[63]","mu_classroom[64]","mu_classroom[65]","mu_classroom[66]","mu_classroom[67]","mu_classroom[68]","mu_classroom[69]"), inc_warmup = F)
+```
+
+```{r}
+traceplot(test_fit, pars = c("mu_classroom[70]","mu_classroom[71]","mu_classroom[72]","mu_classroom[73]","mu_classroom[74]","mu_classroom[75]","mu_classroom[76]","mu_classroom[77]","mu_classroom[78]","mu_classroom[79]","mu_classroom[80]","mu_classroom[81]","mu_classroom[82]","mu_classroom[83]","mu_classroom[84]","mu_classroom[85]","mu_classroom[86]","mu_classroom[87]","mu_classroom[88]","mu_classroom[89]","mu_classroom[90]","mu_classroom[91]","mu_classroom[92]"), inc_warmup = F)
+```
+```{r}
+traceplot(test_fit, pars = c("mu_0", "tau2_0", "alpha", "beta"), inc_warmup = F)
+```
+
+```{r}
+library(rstanarm)
+model = stan_glm(posttest~school_type+teaching_method+lunch+gender+pretest, data = test_scores)
+```
+
+```{r}
+summary(model)
+```
+
+```{r}
+unique(test_scores$classroom_factor)
+```
+```{r}
+reg_stan <- list(
+  D = 4,
+  N = nrow(test_scores),
+  L = length(unique(test_scores$classroom)),
+  ll = test_scores$classroom_factor,
+  y = test_scores$posttest,
+  x = test_scores[,c(2,3,5,9)]
+)
+
+reg_fit = stan(file = 'regression.stan', data = reg_stan)
+```
+
+```{r}
+summary(reg_fit)
+```
+
+```{r}
+library(brms)
+brm(posttest ~ school_setting+school_type+teaching_method+n_student+gender+lunch+pretest + (1 + teaching_method+n_student+lunch+pretest | classroom) + (1 + school_setting+school_type+lunch+pretest | school), data = test_scores)
+```
+
+```{r}
+158/(158+393)
+760/(760+822)
+```
+
+```{r}
+as.numeric(as.factor(test_scores$lunch))
+```
+
+```{r}
+test_scores$school_setting_factor <- as.numeric(as.factor(test_scores$school_setting))
+#1: rural, 2:suburban, 3: urban
+test_scores$test_lunch <- as.numeric(as.factor(test_scores$lunch))
+test_scores$lunch_factor <- ifelse(test_scores$lunch == "Does not qualify", 1,0)
+test_scores$public <- ifelse(test_scores$school_type == "Public", 1,0)
+test_scores$male <- ifelse(test_scores$gender == "Male", 1,0)
+test_scores$Standard <- ifelse(test_scores$teaching_method == "Standard", 1,0)
+```
+
+```{r}
+mu_pretest = mean(test_scores$pretest)
+sd_pretest = sd(test_scores$pretest)
+test_scores$scaled_pretest = (test_scores$pretest - mu_pretest)/sd_pretest
+```
+
+
+```{r}
+test_scores[,c(18,13,15,16,17)]
+```
+
+
+```{r}
+library(rstan)
+reg_stan <- list(
+  D = 4,
+  N = nrow(test_scores),
+  S = length(unique(test_scores$school_setting)),
+  y = test_scores$pretest,
+  setting = test_scores$school_setting_factor,
+  x = test_scores[,c(13,15,16,17)]
+)
+
+reg_fit <- stan(file = 'regression.stan', data = reg_stan)
+```
+
+```{r}
+reg_samples = extract(reg_fit)
+rural_betas = reg_samples$beta_setting[,1,]
+sub_betas = reg_samples$beta_setting[,2,]
+urban_betas = reg_samples$beta_setting[,3,]
+print("rural")
+mean(rural_betas[,1]>0)
+mean(rural_betas[,2]<0)
+mean(rural_betas[,3]>0)
+mean(rural_betas[,4]<0)
+print("suburban")
+mean(sub_betas[,1]>0)
+mean(sub_betas[,2]<0)
+mean(sub_betas[,3]<0)
+mean(sub_betas[,4]<0)
+print("urban")
+mean(urban_betas[,1]>0)
+mean(urban_betas[,2]<0)
+mean(urban_betas[,3]>0)
+mean(urban_betas[,4]>0)
+```
+
+
+```{r}
+reg_sum = summary(reg_fit)$summary
+reg_sum[1:nrow(reg_sum)-1,c("mean", "sd", "2.5%", "97.5%")]
+```
+
+```{r}
+reg_sum
+```
+
+
+```{r}
+library(knitr)
+kable(reg_sum[1:nrow(reg_sum)-1,c("2.5%", "97.5%")])
+```
+
+```{r}
+library(gridExtra)
+library(ggplot2)
+plot_11 = plot(reg_fit, plotfun = "hist", pars="beta_setting[1,1]") + scale_x_continuous(limits = c(9,18))  +
+           theme(axis.title = element_blank())
+plot_12 = plot(reg_fit, plotfun = "hist", pars="beta_setting[1,2]")  + scale_x_continuous(limits = c(-15,2))   +
+           theme(axis.title = element_blank())
+plot_13 = plot(reg_fit, plotfun = "hist", pars="beta_setting[1,3]")  + scale_x_continuous(limits = c(-3,3))   +
+           theme(axis.title = element_blank())
+plot_14 = plot(reg_fit, plotfun = "hist", pars="beta_setting[1,4]")  + scale_x_continuous(limits = c(-9,3))   +
+           theme(axis.title = element_blank())
+plot_21 = plot(reg_fit, plotfun = "hist", pars="beta_setting[2,1]")  + scale_x_continuous(limits = c(9,18))  +
+           theme(axis.title = element_blank())
+plot_22 = plot(reg_fit, plotfun = "hist", pars="beta_setting[2,2]")  + scale_x_continuous(limits = c(-15,2))  +
+           theme(axis.title = element_blank())
+plot_23 = plot(reg_fit, plotfun = "hist", pars="beta_setting[2,3]")  + scale_x_continuous(limits = c(-3,3))  +
+           theme(axis.title = element_blank())
+plot_24 = plot(reg_fit, plotfun = "hist", pars="beta_setting[2,4]")  + scale_x_continuous(limits = c(-9,3))  +
+           theme(axis.title = element_blank())
+plot_31 = plot(reg_fit, plotfun = "hist", pars="beta_setting[3,1]")  + scale_x_continuous(limits = c(9,18))  +
+           theme(axis.title = element_blank())
+plot_32 = plot(reg_fit, plotfun = "hist", pars="beta_setting[3,2]")  + scale_x_continuous(limits = c(-15,2))  +
+           theme(axis.title = element_blank())
+plot_33 = plot(reg_fit, plotfun = "hist", pars="beta_setting[3,3]")  + scale_x_continuous(limits = c(-3,3))  +
+           theme(axis.title = element_blank())
+plot_34 = plot(reg_fit, plotfun = "hist", pars="beta_setting[3,4]")  + scale_x_continuous(limits = c(-9,3))  +
+           theme(axis.title = element_blank())
+grid.arrange(plot_11, plot_12, plot_13, plot_14,plot_21, plot_22, plot_23, plot_24,plot_31, plot_32, plot_33, plot_34, ncol=4)
+```
+
+
+```{r}
+traceplot(reg_fit, pars = c("mu[1]", "mu[2]", "mu[3]", "mu[4]"), inc_warmup = F)
+traceplot(reg_fit, pars = c("alpha_setting[1]", "alpha_setting[2]", "alpha_setting[3]"), inc_warmup = F)
+traceplot(reg_fit, pars = c("sigma_setting[1]", "sigma_setting[2]", "sigma_setting[3]", "sigma_setting[4]"), inc_warmup = F)
+traceplot(reg_fit, pars = c("beta_setting[1,1]", "beta_setting[1,2]", "beta_setting[1,3]", "beta_setting[1,4]", "beta_setting[2,1]", "beta_setting[2,2]", "beta_setting[2,3]", "beta_setting[2,4]","beta_setting[3,1]", "beta_setting[3,2]", "beta_setting[3,3]", "beta_setting[3,4]"), inc_warmup = F)
+#traceplot(reg_fit, pars = c("beta_setting[2,1]", "beta_setting[2,2]", "beta_setting[2,3]", "beta_setting[2,4]"), inc_warmup = F)
+#traceplot(reg_fit, pars = c("beta_setting[3,1]", "beta_setting[3,2]", "beta_setting[3,3]", "beta_setting[3,4]"), inc_warmup = F)
+traceplot(reg_fit, pars = c("sigma_y"), inc_warmup = F)
+```
+
+
+```{r}
+summary(reg_fit)
+```
+
+```{r}
+traceplot(reg_fit, pars = c("mu", "sigma_setting", "beta_setting", "sigma2_y"))
+```
+
+
+```{r}
+test_scores$difference = test_scores$posttest - test_scores$pretest
+```
+
+```{r}
+ggplot(test_scores, aes(x=difference, fill = school_type)) + geom_density(alpha=0.25) + ggtitle("Distribution of Difference in High School Scores by School Type") + theme_light()
+
+```
+```{r}
+ggplot(test_scores, aes(x=difference, fill = lunch)) + geom_density(alpha=0.25) + ggtitle("Distribution of Difference in High School Scores by Lunch") + theme_light()
+
+```
+```{r}
+ggplot(test_scores, aes(x=difference, y = n_student, group=n_student, fill=n_student)) + geom_density_ridges() + theme_light()
+```
+
+```{r}
+ggplot(test_scores, aes(x=difference, fill = lunch)) + geom_density(alpha=0.25) + ggtitle("Distribution of Difference in High School Scores by Lunch") + theme_light() + facet_grid(.~school_setting)
+```
+```{r}
+suburban = test_scores[test_scores$school_setting == "Suburban",]
+#sub_model = lm(difference~lunch+school_type+gender+teaching_method, data=suburban)
+#summary(sub_model)
+sub_m2 = lm(posttest~pretest+lunch+school_type+gender+teaching_method, data=suburban)
+summary(sub_m2)
+```
+
+
