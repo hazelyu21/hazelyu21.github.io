@@ -1,4 +1,4 @@
-# Hazel Yu's Portfolio
+# Portfolio
 
 ---
 
