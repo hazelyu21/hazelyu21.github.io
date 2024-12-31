@@ -29,8 +29,9 @@ After choosing the variables most associated with heart disease, we constructed 
 
 **Project overview:** In this project, my team partner and I analyzed the effect of free lunch qualification and math test scores for high school students using a Bayesian hierarchical model. We built the hierarchy using the school setting variable, which includes Rural, Suburban, and Urban as categories. We fitted a linear regression model using Stan with school setting as a level to predict post-test scores. The covariates in our model included free lunch, school type, gender, and teaching method. We found that students that qualified for free/reduced lunch tended to have lower post-test scores compared to those who did not qualify.
 
-<img src="images/heart_nn_img.png?raw=true"/>
-<img src="images/heart_nn_img2.png?raw=true"/>
+<img src="images/density.png?raw=true"/>
+<img src="images/mcmc.png?raw=true"/>
+<img src="images/table.png?raw=true"/>
 
 ***Technical skills:*** Markov chain Monte Carlo simulations, Bayesian hierarchical modeling
 
