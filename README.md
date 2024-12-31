@@ -50,8 +50,6 @@ After choosing the variables most associated with heart disease, we constructed 
 
 We did color separation using K-means clustering to separate the colors in each painting into five clusters. We created RGB distirbutions with kernel density plots and used hierarchical clustering analysis to investigate color balances and the distribution of colors in various regions of interest (ROI). We also looked at the conditional entropy values for each possible permutation of primary colors.
 
-**Improvements:** To improve our model, we could increase the accuracy with boosting methods, such as Random Forest or LASSO.
-
 ***Technical skills:*** K-means clustering, hierarchical clustering, entropy
 
 ***Tools:*** Python
