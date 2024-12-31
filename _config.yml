@@ -8,8 +8,7 @@ description: > # your text below (remove <br> elements if you don't need line br
   <a href="https://github.com/hazelyu21">GitHub</a> |
     <a href="pdf/resume.pdf">Resume</a>
   </p>
-  I have 
-
+  
   I have a Master's degree in Data Science from UC Irvine and a BS in Statistics from UC Davis. With a strong passion for data analysis and data science, I am committed to applying my analytical and critical thinking skills to complex problems.
    
 theme: jekyll-theme-minimal
