@@ -14,7 +14,7 @@ After choosing the variables most associated with heart disease, we constructed 
 
 **Improvements:** To improve our model, we could increase the accuracy with boosting methods, such as Random Forest or LASSO.
 
-***Technical skills:*** Decision tree learning
+***Technical skills:*** Decision tree learning, entropy, odds ratio
 
 ***Tools:*** Python, R
 
@@ -41,4 +41,25 @@ After choosing the variables most associated with heart disease, we constructed 
 
 [![Open Code](https://img.shields.io/badge/Jupyter-Open_Files-red?logo=Jupyter)](https://github.com/hazelyu21/hazelyu.github.io/tree/main/projects/bayesian)
 [![Open Report](https://img.shields.io/badge/PDF-View_Report-red?logo=MicrosoftWord)](docs/bayesian_free_lunch_qualification.pdf)
+
+---
+
+### Analysis of "Shot Marilyns" Paintings
+
+**Project overview:** Our group analyzed Andy Warhol's Shot Marilyns, which are silkscreen paintings of Marilyn Monroe with different background colors: orange, red, turquoise, blue, and egg blue.
+
+We did color separation using K-means clustering to separate the colors in each painting into five clusters. We created RGB distirbutions with kernel density plots and used hierarchical clustering analysis to investigate color balances and the distribution of colors in various regions of interest (ROI). We also looked at the conditional entropy values for each possible permutation of primary colors.
+
+**Improvements:** To improve our model, we could increase the accuracy with boosting methods, such as Random Forest or LASSO.
+
+***Technical skills:*** K-means clustering, hierarchical clustering, entropy
+
+***Tools:*** Python
+
+***Team:*** Shraddha Jhingan, Tsubasa Lin, Curtis Pan, Hazel Yu
+
+[![Open Code](https://img.shields.io/badge/Jupyter-Open_Files-red?logo=Jupyter)](https://github.com/hazelyu21/hazelyu.github.io/tree/main/projects/shot_marilyns)
+[![Open Report](https://img.shields.io/badge/PDF-View_Report-red?logo=MicrosoftWord)](docs/STA160_Final_Project.pdf)
+
+---
 
