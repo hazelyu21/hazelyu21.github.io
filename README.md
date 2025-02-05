@@ -8,7 +8,7 @@
 
 To do this, we looked at the mutual conditional entropy of the variables, with Heart Disease or Attack as the response and a fused situation with Heart Disease or Attack and Stroke combined as one response. We also analyzed the correlation between the non-categorical variables and Heart Disease or Attack and the correlation between non-categorical variables and Stroke. Lastly, we calculated the odds ratio between the binary variables and Heart Disease or Attack. 
 
-After choosing the variables most associated with heart disease, we constructed a classification decision tree that minimizes the amount of conditional entropy, and thus maximizes the imformation gain from these variables on heart disease.
+After choosing the variables most associated with heart disease, we constructed a classification decision tree that minimizes the amount of conditional entropy, and thus maximizes the information gain from these variables on heart disease.
 
 <img src="images/decision_tree.png?raw=true"/>
 
