@@ -20,7 +20,7 @@ After choosing the variables most associated with heart disease, we constructed 
 
 ***Team:*** Shraddha Jhingan, Tsubasa Lin, Curtis Pan, Hazel Yu
 
-[![Open Code](https://img.shields.io/badge/Jupyter-Open_Files-red?logo=Jupyter)](https://github.com/hazelyu21/hazelyu.github.io/tree/main/projects/heart_disease)
+[![Open Code](https://img.shields.io/badge/Jupyter-Open_Files-red?logo=Jupyter)](https://github.com/hazelyu21/hazelyu21.github.io/tree/main/projects/heart_disease)
 [![Open Report](https://img.shields.io/badge/PDF-View_Report-red?logo=MicrosoftWord)](docs/heart_disease_and_health_indicators.pdf)
 
 ---
@@ -39,7 +39,7 @@ After choosing the variables most associated with heart disease, we constructed 
 
 ***Team:*** Jasmine Son, Hazel Yu
 
-[![Open Code](https://img.shields.io/badge/Jupyter-Open_Files-red?logo=Jupyter)](https://github.com/hazelyu21/hazelyu.github.io/tree/main/projects/bayesian)
+[![Open Code](https://img.shields.io/badge/Jupyter-Open_Files-red?logo=Jupyter)](https://github.com/hazelyu21/hazelyu21.github.io/tree/main/projects/bayesian)
 [![Open Report](https://img.shields.io/badge/PDF-View_Report-red?logo=MicrosoftWord)](docs/bayesian_free_lunch_qualification.pdf)
 
 ---
@@ -59,7 +59,7 @@ We did color separation using K-means clustering to separate the colors in each 
 
 ***Team:*** Shraddha Jhingan, Tsubasa Lin, Curtis Pan, Hazel Yu
 
-[![Open Code](https://img.shields.io/badge/Jupyter-Open_Files-red?logo=Jupyter)](https://github.com/hazelyu21/hazelyu.github.io/tree/main/projects/shot_marilyns)
+[![Open Code](https://img.shields.io/badge/Jupyter-Open_Files-red?logo=Jupyter)](https://github.com/hazelyu21/hazelyu21.github.io/tree/main/projects/shot_marilyns)
 [![Open Report](https://img.shields.io/badge/PDF-View_Report-red?logo=MicrosoftWord)](docs/shot_marilyn_paintings.pdf)
 
 ---
